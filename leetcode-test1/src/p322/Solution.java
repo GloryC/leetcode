@@ -1,27 +1,35 @@
 package p322;
 
+import java.util.Arrays;
+
 /**
  * @author Glory
  * @date 2020/3/8 22:21
  */
 public class Solution {
 
-    public int coinChange2(int[] coins, int rem, int[] count) {
-        if (rem < 0) return -1;
-        if (rem == 0) return 0;
-        if (count[rem - 1] != 0) return count[rem - 1];
-        int min = Integer.MAX_VALUE;
-        for (int coin : coins) {
-            int res = coinChange2(coins, rem - coin, count);
-            if (res >= 0 && res < min) min = 1 + res;
+    public int coinChange(int[] coins, int amount) {
+        int[] dp = new int[amount + 1];
+        Arrays.fill(dp, amount + 1);
+        dp[0] = 0;
+        for (int i = 0; i < dp.length; i++) {
+            for (int coin : coins) {
+                if (i < coin) continue;
+                dp[i] = Math.min(dp[i], 1 + dp[i - coin]);
+            }
         }
-        count[rem - 1] = (min == Integer.MAX_VALUE) ? -1 : min;
-        return count[rem - 1];
+
+        if (dp[amount] == amount + 1) {
+            return -1;
+        } else {
+            return dp[amount];
+        }
     }
 
-    public int coinChange(int[] coins, int amount) {
-        if (amount < 1) return 0;
-        return coinChange2(coins, amount, new int[amount]);
+    public static void main(String[] args) {
+        int[] coins = {2};
+        Solution solution = new Solution();
+        System.out.println(solution.coinChange(coins, 3));
     }
 
 }
