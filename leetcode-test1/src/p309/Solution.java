@@ -5,18 +5,16 @@ package p309;
  * @date 2020/3/24 19:32
  */
 public class Solution {
-
     public int maxProfit(int[] prices) {
-        int n = prices.length;
-        int dp0 = 0, dp1 = Integer.MIN_VALUE;
-        int dpPre0 = 0;  // 冷冻期
-        for (int i = 0; i < n; i++) {
-            int temp = dp0;
-            dp0 = Math.max(dp0, dp1 + prices[i]);
-            dp1 = Math.max(dp1, dpPre0 - prices[i]);
-            dpPre0 = temp;  // 冷冻期赋值
+        int dp_i_0 = 0, dp_i_1 = Integer.MIN_VALUE;
+        int dp_pre_0 = 0;       // 冷冻期
+        for (int price : prices) {
+            int temp = dp_i_0;
+            dp_i_0 = Math.max(dp_i_0, dp_i_1 + price);
+            dp_i_1 = Math.max(dp_i_1, dp_pre_0 - price);
+            dp_pre_0 = temp;    // 冷冻期为上一次为0的时候
         }
-        return dp0;
+        return dp_i_0;
     }
 
     public static void main(String[] args) {
