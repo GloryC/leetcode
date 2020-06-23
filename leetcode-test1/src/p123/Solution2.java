@@ -5,37 +5,16 @@ package p123;
  * @date 2020/3/9 17:13
  */
 public class Solution2 {
-
     public int maxProfit(int[] prices) {
-        int n = prices.length;
-        int k = 2;
-        int[][][] dp = new int[n][k + 1][2];
-        dp[0][1][0] = 0;
-        dp[0][1][1] = Integer.MIN_VALUE;
-        dp[0][2][0] = 0;
-        dp[0][2][1] = Integer.MIN_VALUE;
-        for (int i = 1; i < n; i++) {
-            for (int j = k; j >= 1; j++) {
-                dp[i][j][0] = Math.max(dp[i - 1][j][0], dp[i - 1][j][1] + prices[i]);
-                dp[i][j][1] = Math.max(dp[i - 1][j][1], dp[i - 1][j - 1][0] - prices[i]);
-            }
+        int dp_i10 = 0, dp_i11 = Integer.MIN_VALUE;
+        int dp_i20 = 0, dp_i21 = Integer.MIN_VALUE;
+        for (int price : prices) {
+            dp_i20 = Math.max(dp_i20, dp_i21 + price);
+            dp_i21 = Math.max(dp_i21, dp_i10 - price);
+            dp_i10 = Math.max(dp_i10, dp_i11 + price);
+            dp_i11 = Math.max(dp_i11, -price);
         }
-        return dp[n - 1][k][0];
-    }
-
-    public int maxProfit2(int[] prices) {
-        int n = prices.length;
-        int max_k = 2;
-        int[][][] dp = new int[n][max_k + 1][2];
-        for (int i = 0; i < n; i++) {
-            for (int k = max_k; k >= 1; k--) {
-                if (i - 1 == -1) { /*处理 base case */ }
-                dp[i][k][0] = Math.max(dp[i-1][k][0], dp[i-1][k][1] + prices[i]);
-                dp[i][k][1] = Math.max(dp[i-1][k][1], dp[i-1][k-1][0] - prices[i]);
-            }
-        }
-        // 穷举了 n × max_k × 2 个状态，正确。
-        return dp[n - 1][max_k][0];
+        return dp_i20;
     }
 
     public static void main(String[] args) {
