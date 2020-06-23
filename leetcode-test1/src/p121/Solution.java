@@ -7,13 +7,13 @@ package p121;
 public class Solution {
 
     public int maxProfit(int[] prices) {
-        if (prices.length <= 1) return 0;
-        int min = prices[0], max = 0;
-        for (int i = 1; i < prices.length; i++) {
-            max = Math.max(max, prices[i] - min);
-            min = Math.min(min, prices[i]);
+        int dp_i_0 = 0, dp_i_1 = Integer.MIN_VALUE;
+        for (int price : prices) {
+            dp_i_0 = Math.max(dp_i_0, dp_i_1 + price);
+            // you can only buy once
+            dp_i_1 = Math.max(dp_i_1, -price);
         }
-        return max;
+        return dp_i_0;
     }
 
     public static void main(String[] args) {
