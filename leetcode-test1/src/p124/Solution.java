@@ -5,44 +5,36 @@ package p124;
  * @date 2020/3/9 17:33
  */
 public class Solution {
-
     public int maxProfit(int k, int[] prices) {
-        if (prices.length <= 1) return 0;
-        int[] buyDp = new int[k + 1];
-        int[] sellDp = new int[k + 1];
+        int n = prices.length;
+        if (n == 0) return 0;
+        if (k > n / 2)
+            return maxProfit_k_inf(prices);
 
-        int len = prices.length;
-        //k>len/2,也就是可以无限制交易了，贪心算法
-        if (k > len / 2) {
-            int dp = 0;
-            for (int i = 0; i < len - 1; i++) {
-                if (prices[i + 1] > prices[i]) {
-                    dp = dp + prices[i + 1] - prices[i];
+        int[][][] dp = new int[n][k + 1][2];
+        for (int i = 0; i < n; i++) {
+            for (int j = k; j >= 1; j--) {
+                if (i == 0) {
+                    dp[i][j][0] = 0;
+                    dp[i][j][1] = -prices[i];
+                    continue;
                 }
+                dp[i][j][0] = Math.max(dp[i - 1][j][0], dp[i - 1][j][1] + prices[i]);
+                dp[i][j][1] = Math.max(dp[i - 1][j][1], dp[i - 1][j - 1][0] - prices[i]);
             }
-            return dp;
         }
+        return dp[n - 1][k][0];
+    }
 
-        for (int i = 1; i <= k; i++) {
-            buyDp[i] = Integer.MIN_VALUE;
-        }
+    private int maxProfit_k_inf(int[] prices) {
+        int dp_i_0 = 0, dp_i_1 = Integer.MIN_VALUE;
         for (int price : prices) {
-            for (int i = 1; i <= k; i++) {
-                /*
-                 对于任意一天考虑四个变量:
-                 fstBuy: 在该天第一次买入股票可获得的最大收益
-                 fstSell: 在该天第一次卖出股票可获得的最大收益
-                 secBuy: 在该天第二次买入股票可获得的最大收益
-                 secSell: 在该天第二次卖出股票可获得的最大收益
-                 分别对四个变量进行相应的更新, 最后secSell就是最大
-                 收益值(secSell >= fstSell)
-                 去掉second的部分，就是只卖一次的解法
-                 */
-                buyDp[i] = Math.max(buyDp[i], sellDp[i - 1] - price);
-                sellDp[i] = Math.max(sellDp[i], buyDp[i] + price);
-            }
+            // 上一次为空的时候
+            int temp = dp_i_0;
+            dp_i_0 = Math.max(dp_i_0, dp_i_1 + price);
+            dp_i_1 = Math.max(dp_i_1, temp - price);
         }
-        return sellDp[k];
+        return dp_i_0;
     }
 
     public static void main(String[] args) {
