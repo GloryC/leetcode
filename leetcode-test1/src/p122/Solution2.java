@@ -7,15 +7,14 @@ package p122;
 public class Solution2 {
 
     public int maxProfit(int[] prices) {
-        int n = prices.length;
-        int dp0 = 0;  //无股票
-        int dp1 = Integer.MIN_VALUE; // 有股票
-        for (int i = 0; i < n; i++) {
-            int temp = dp0;
-            dp0 = Math.max(dp0, dp1 + prices[i]);
-            dp1 = Math.max(dp1, temp - prices[i]);
+        int dp_i_0 = 0, dp_i_1 = Integer.MIN_VALUE;
+        for (int price : prices) {
+            // 上一次为空的时候
+            int temp = dp_i_0;
+            dp_i_0 = Math.max(dp_i_0, dp_i_1 + price);
+            dp_i_1 = Math.max(dp_i_1, temp - price);
         }
-        return dp0;
+        return dp_i_0;
     }
 
     public static void main(String[] args) {
