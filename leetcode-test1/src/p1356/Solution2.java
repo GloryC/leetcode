@@ -1,5 +1,7 @@
 package p1356;
 
+import util.QuickSort;
+
 import java.util.Arrays;
 
 /**
@@ -9,7 +11,7 @@ import java.util.Arrays;
 public class Solution2 {
 
     public int[] sortByBits(int[] arr) {
-        quickSort(arr, 0, arr.length - 1);
+        QuickSort.sort(arr, 0, arr.length - 1);
 
         int[] res = new int[arr.length];
         int[] countArr = new int[14];
@@ -38,39 +40,6 @@ public class Solution2 {
         }
 
         return res;
-    }
-
-    private static void quickSort(int[] data, int left, int right) {
-        int base = data[left];
-        int ll = left;
-        int rr = right;
-        while (ll < rr) {
-            while (ll < rr && data[rr] >= base) {
-                rr--;
-            }
-            if (ll < rr) {
-                int temp = data[rr];
-                data[rr] = data[ll];
-                data[ll] = temp;
-                ll++;
-            }
-            while (ll < rr && data[ll] <= base) {
-                ll++;
-            }
-            if (ll < rr) {
-                int temp = data[rr];
-                data[rr] = data[ll];
-                data[ll] = temp;
-                rr--;
-            }
-        }
-
-        if (left < ll) {
-            quickSort(data, left, ll - 1);
-        }
-        if (ll < right) {
-            quickSort(data, ll + 1, right);
-        }
     }
 
     public static void main(String[] args) {
