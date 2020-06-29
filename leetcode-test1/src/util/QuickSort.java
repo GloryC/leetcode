@@ -8,7 +8,7 @@ import java.util.Arrays;
  */
 public class QuickSort {
 
-    public static void quickSort(int[] data, int left, int right) {
+    public static void sort(int[] data, int left, int right) {
         int base = data[left];
         int ll = left, rr = right;
         while (ll < rr) {
@@ -34,16 +34,16 @@ public class QuickSort {
         }
 
         if (left < ll) {
-            quickSort(data, left, ll - 1);
+            sort(data, left, ll - 1);
         }
         if (rr < right) {
-            quickSort(data, rr + 1, right);
+            sort(data, rr + 1, right);
         }
     }
 
     public static void main(String[] args) {
         int[] data = {1, 2, 5, 6, 7, 3};
-        quickSort(data, 0, data.length - 1);
+        sort(data, 0, data.length - 1);
         System.out.println(Arrays.toString(data));
     }
 

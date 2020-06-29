@@ -1,5 +1,7 @@
 package p912;
 
+import util.QuickSort;
+
 import java.util.Arrays;
 
 /**
@@ -9,40 +11,8 @@ import java.util.Arrays;
 public class Solution {
 
     public int[] sortArray(int[] nums) {
-        quickSort(nums, 0, nums.length - 1);
+        QuickSort.sort(nums, 0, nums.length - 1);
         return nums;
-    }
-
-    private void quickSort(int[] data, int left, int right) {
-        int base = data[left];
-        int ll = left, rr = right;
-        while (ll < rr) {
-            while (ll < rr && data[rr] >= base) {
-                rr--;
-            }
-            if (ll < rr) {
-                int temp = data[rr];
-                data[rr] = data[ll];
-                data[ll] = temp;
-                ll++;
-            }
-
-            while (ll < rr && data[ll] <= base) {
-                ll++;
-            }
-            if (ll < rr) {
-                int temp = data[rr];
-                data[rr] = data[ll];
-                data[ll] = temp;
-                rr--;
-            }
-        }
-        if (left < ll) {
-            quickSort(data, left, ll - 1);
-        }
-        if (rr < right) {
-            quickSort(data, rr + 1, right);
-        }
     }
 
     public static void main(String[] args) {

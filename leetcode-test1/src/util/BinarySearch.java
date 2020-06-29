@@ -26,7 +26,7 @@ public class BinarySearch {
 
     public static void main(String[] args) {
         int[] data = {1, 5, 5, 5, 7, 5};
-        QuickSort.quickSort(data, 0, data.length - 1);
+        QuickSort.sort(data, 0, data.length - 1);
         System.out.println(Arrays.toString(data));
         int res = binarySearch(data, 5);
         System.out.println(res);
