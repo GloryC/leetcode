@@ -1,20 +1,12 @@
 package p108;
 
+import util.TreeNode;
+
 /**
  * @author Glory
  * @date 2019/12/12 9:06
  */
 public class Solution {
-
-    static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode(int x) {
-            val = x;
-        }
-    }
 
     public TreeNode sortedArrayToBST(int[] nums) {
         if (nums == null || nums.length == 0) {
@@ -23,14 +15,17 @@ public class Solution {
         return bst(nums, 0, nums.length - 1);
     }
 
-    private TreeNode bst(int[] nums, int start, int end) {
-        if (start > end) {
+    private TreeNode bst(int[] nums, int left, int right) {
+        if (left > right) {
             return null;
         }
-        int mid = start + (end - start) / 2;
+
+        // 总是选择中间位置左边的数字作为根节点
+        int mid = left + (right - left) / 2;
+
         TreeNode node = new TreeNode(nums[mid]);
-        node.left = bst(nums, start, mid - 1);
-        node.right = bst(nums, mid + 1, end);
+        node.left = bst(nums, left, mid - 1);
+        node.right = bst(nums, mid + 1, right);
         return node;
     }
 
