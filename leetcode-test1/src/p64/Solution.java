@@ -7,35 +7,23 @@ package p64;
 public class Solution {
 
     public int minPathSum(int[][] grid) {
-        int len = grid.length;
-        int depth = grid[0].length;
-        int[][] dp = new int[len][depth];
-        for (int i = 0; i < len; i++) {
-            for (int j = 0; j < depth; j++) {
-                // 在起点
-                if (i == 0 && j == 0) {
-                    dp[i][j] = grid[i][j];
-                }
-                // 在左边缘，上一次只能是下移
-                else if (i != 0 && j == 0) {
-                    dp[i][j] = dp[i - 1][j] + grid[i][j];
-                }
-                // 在上边缘，上一次只能是右移
-                else if (i == 0 && j != 0) {
-                    dp[i][j] = dp[i][j - 1] + grid[i][j];
-                } else {
-                    dp[i][j] = Math.min(dp[i][j - 1], dp[i - 1][j]) + grid[i][j];
-                }
+        // use grid[][] as dp[][]
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (i == 0 && j == 0) continue;
+                else if (i == 0) grid[i][j] += grid[i][j - 1];
+                else if (j == 0) grid[i][j] += grid[i - 1][j];
+                else grid[i][j] += Math.min(grid[i - 1][j], grid[i][j - 1]);
             }
         }
-        return dp[len - 1][depth - 1];
+        return grid[grid.length - 1][grid[0].length - 1];
     }
 
     public static void main(String[] args) {
         int[][] data = new int[][]{
-                {1,3,1},
-                {1,5,1},
-                {4,2,1}
+                {1, 3, 1},
+                {1, 5, 1},
+                {4, 2, 1}
         };
         Solution solution = new Solution();
         System.out.println(solution.minPathSum(data));
