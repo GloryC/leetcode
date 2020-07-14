@@ -11,20 +11,15 @@ import java.util.List;
 public class Solution {
 
     public int minimumTotal(List<List<Integer>> triangle) {
-        // 特判
-        if (triangle == null || triangle.size() == 0) {
-            return 0;
-        }
+        if (triangle == null || triangle.size() == 0) return 0;
 
         int row = triangle.size();
         int column = triangle.get(row - 1).size();
-
         int[][] dp = new int[row][column];
         dp[0][0] = triangle.get(0).get(0);
         int res = Integer.MAX_VALUE;
 
         for (int i = 1; i < row; i++) {
-            //对每一行的元素进行推导
             for (int j = 0; j <= i; j++) {
                 if (j == 0) {
                     // 最左端特殊处理
@@ -39,11 +34,10 @@ public class Solution {
         }
 
         // dp最后一行记录了最小路径
-        for (int i = 0; i < column; i++) {
-            res = Math.min(res, dp[row - 1][i]);
+        for (int j = 0; j < column; j++) {
+            res = Math.min(res, dp[row - 1][j]);
         }
         return res;
-
     }
 
     public static void main(String[] args) {
