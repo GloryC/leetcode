@@ -11,7 +11,8 @@ public class Solution {
         points[0] = points[n + 1] = 1;
         System.arraycopy(nums, 0, points, 1, n);
 
-        int[][] dp = new int[n + 2][n + 2];
+        // dp[i][j] = x表示，戳破气球i和气球j之间（开区间，不包括i和j）的所有气球，可以获得的最高分数为x。
+         int[][] dp = new int[n + 2][n + 2];
         for (int i = n; i >= 0; i--) {
             for (int j = i + 1; j < n + 2; j++) {
                 for (int k = i + 1; k < j; k++) {
