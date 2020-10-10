@@ -42,34 +42,4 @@ public class Solution {
         return pt1;
     }
 
-    /**
-     * below is another solution
-     *
-     * @param head
-     * @return
-     */
-    public ListNode detectCycle2(ListNode head) {
-        if (head == null || head.next == null) {
-            return null;
-        }
-        ListNode fast = head;
-        ListNode slow = head;
-        while (true) {
-            if (fast == null || fast.next == null) {
-                return null;
-            }
-            fast = fast.next.next;
-            slow = slow.next;
-            if (slow == fast) {
-                break;
-            }
-        }
-        fast = head;
-        while (fast != slow) {
-            fast = fast.next;
-            slow = slow.next;
-        }
-        return fast;
-    }
-
 }
