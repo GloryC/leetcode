@@ -9,27 +9,26 @@ import java.util.Arrays;
 public class Solution {
     public boolean canPartition(int[] nums) {
         int sum = 0, n = nums.length;
-        for (int num : nums) sum += num;
+        for (int num : nums) {
+            sum += num;
+        }
 
         if (sum % 2 != 0) return false;
         sum /= 2;
 
         boolean[] dp = new boolean[sum + 1];
-        Arrays.fill(dp, false);
         dp[0] = true;
 
-        for (int i = 0; i < n; i++) {
-            for (int j = sum; j >= 0; j--) {
-                if (j - nums[i] >= 0) {
-                    dp[j] = dp[j] || dp[j - nums[i]];
-                }
+        for (int num : nums) {
+            for (int j = sum; j >= num; j--) {
+                dp[j] = dp[j] || dp[j - num];
             }
         }
         return dp[sum];
     }
 
     public static void main(String[] args) {
-        int[] nums = {1, 2, 3, 5};
+        int[] nums = {1, 2, 3, 4};
         Solution solution = new Solution();
         System.out.println(solution.canPartition(nums));
     }
