@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Queue;
 
 /**
+ * level order
+ *
  * @author Glory
  * @date 2020/4/22 16:30
  */
