@@ -1,1 +1,17 @@
+/out/
 *.class
+.idea
+*.iws
+*.iml
+*.ipr
+*.reg
+*.reg.*
+target/
+*.log
+*.log.*
+*.classpath
+*.factorypath
+*.project
+.settings
+logs/
+/.idea/
