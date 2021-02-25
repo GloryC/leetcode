@@ -1,30 +1,27 @@
 package p226;
 
+import util.TreeNode;
+
 /**
  * @author Glory
  * @date 2019/10/15 9:10
  */
 public class Solution {
 
-    static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode(int x) {
-            val = x;
-        }
-    }
-
+    /**
+     * 翻转一棵二叉树
+     */
     public TreeNode invertTree(TreeNode root) {
         if (root == null) {
             return null;
         }
 
-        TreeNode right = invertTree(root.right);
-        TreeNode left = invertTree(root.left);
-        root.left = right;
-        root.right = left;
+        TreeNode tmp = root.left;
+        root.left = root.right;
+        root.right = tmp;
+
+        invertTree(root.left);
+        invertTree(root.right);
         return root;
     }
 
