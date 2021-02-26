@@ -2,41 +2,40 @@ package p105;
 
 import util.TreeNode;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Glory
  * @date 2020/5/22 8:37
  */
 public class Solution {
+
+    /**
+     * 根据一棵树的前序遍历与中序遍历构造二叉树。
+     */
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        int preLen = preorder.length;
-        int inLen = inorder.length;
-        if (preLen != inLen) {
-            throw new RuntimeException("Error");
-        }
-
-        Map<Integer, Integer> map = new HashMap<>(preLen);
-        for (int i = 0; i < inLen; i++) {
-            map.put(inorder[i], i);
-        }
-
-        return buildTree(preorder, 0, preLen - 1, map, 0, inLen - 1);
-
+        return build(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
     }
 
-    private TreeNode buildTree(int[] preorder, int preLeft, int preRight, Map<Integer, Integer> map, int inLeft, int inRight) {
-        if (preLeft > preRight || inLeft > inRight) {
-            return null;
+    private TreeNode build(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd) {
+        if (preStart > preEnd) return null;
+
+        // root 节点对应的值就是前序遍历数组的第一个元素
+        int rootVal = preorder[preStart];
+
+        // rootVal 在中序遍历数组中的索引
+        int index = 0;
+        for (int i = inStart; i <= inEnd; i++) {
+            if (inorder[i] == rootVal) {
+                index = i;
+                break;
+            }
         }
 
-        int rootVal = preorder[preLeft];
-        TreeNode root = new TreeNode(rootVal);
-        int pIndex = map.get(rootVal);
+        int leftSize = index - inStart;
 
-        root.left = buildTree(preorder, preLeft + 1, pIndex - inLeft + preLeft, map, inLeft, pIndex - 1);
-        root.right = buildTree(preorder, pIndex - inLeft + preLeft + 1, preRight, map, pIndex + 1, inRight);
+        TreeNode root = new TreeNode(rootVal);
+        // 递归构造左右子树
+        root.left = build(preorder, preStart + 1, preStart + leftSize, inorder, inStart, index - 1);
+        root.right = build(preorder, preStart + leftSize + 1, preEnd, inorder, index + 1, inEnd);
         return root;
     }
 
