@@ -8,19 +8,30 @@ import util.TreeNode;
  */
 public class Solution {
 
-    private boolean res;
-
     /**
+     * 给定一个二叉树，判断其是否是一个有效的二叉搜索树。
      * BST的中序遍历是有序递增
      */
     public boolean isValidBST(TreeNode root) {
-        return recur(root, Long.MIN_VALUE, Long.MAX_VALUE);
+        return isValidBST(root, null, null);
     }
 
-    private boolean recur(TreeNode node, long min, long max) {
-        if (node == null) return true;
-        if (node.val <= min || node.val >= max) return false;
-        return recur(node.left, min, node.val) && recur(node.right, node.val, max);
+    /**
+     * 限定以 root 为根的子树节点必须满足 max.val > root.val > min.val
+     */
+    private boolean isValidBST(TreeNode root, TreeNode min, TreeNode max) {
+        if (root == null) {
+            return true;
+        }
+
+        if (min != null && root.val <= min.val) {
+            return false;
+        }
+
+        if (max != null && root.val >= max.val) {
+            return false;
+        }
+        return isValidBST(root.left, min, root) && isValidBST(root.right, root, max);
     }
 
 }
