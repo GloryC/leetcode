@@ -8,20 +8,18 @@ import java.util.Arrays;
  */
 public class Solution {
 
+    /**
+     * 方法二：i >> 1会把最低位去掉，因此i >> 1 也是比i小的，同样也是在前面的数组里算过。
+     * 当 i 的最低位是0，则 i 中1的个数和i >> 1中1的个数相同；
+     * 当i的最低位是1，i 中1的个数是 i >> 1中1的个数再加1
+     */
     public int[] countBits(int num) {
-        int[] result = new int[num + 1];
-        for (int i = 0; i <= num; i++) {
-            int t = i;
-            int count = 0;
-            while (t > 0) {
-                if ((t & 1) == 1) {
-                    count++;
-                }
-                t >>= 1;
-            }
-            result[i] = count;
+        int[] res = new int[num + 1];
+        for (int i = 1; i <= num; i++) {
+            //注意i&1需要加括号
+            res[i] = res[i >> 1] + (i & 1);
         }
-        return result;
+        return res;
     }
 
     public static void main(String[] args) {
