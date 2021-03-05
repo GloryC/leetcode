@@ -32,35 +32,32 @@ public class MyQueue {
      * Removes the element from in front of queue and returns that element.
      */
     public int pop() {
-        while (!input.isEmpty()){
-            output.push(input.pop());
+        // 如果b栈为空，则将a栈全部弹出并压入b栈中，然后b.pop()
+        if (output.isEmpty()){
+            while (!input.isEmpty()){
+                output.push(input.pop());
+            }
         }
-        Integer pop = output.pop();
-        while (!output.isEmpty()){
-            input.push(output.pop());
-        }
-        return pop;
+        return output.pop();
     }
 
     /**
      * Get the front element.
      */
     public int peek() {
-        while (!input.isEmpty()){
-            output.push(input.pop());
+        if (output.isEmpty()){
+            while (!input.isEmpty()){
+                output.push(input.pop());
+            }
         }
-        Integer pop = output.peek();
-        while (!output.isEmpty()){
-            input.push(output.pop());
-        }
-        return pop;
+        return output.peek();
     }
 
     /**
      * Returns whether the queue is empty.
      */
     public boolean empty() {
-        return input.isEmpty();
+        return input.isEmpty() && output.isEmpty();
     }
 
 }
