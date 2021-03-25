@@ -2,38 +2,35 @@ package p82;
 
 import util.ListNode;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * @author Glory
  * @date 2020/3/24 18:17
  */
 public class Solution {
 
+    /**
+     * 存在一个按升序排列的链表，给你这个链表的头节点 head ，请你删除链表中所有存在数字重复情况的节点，
+     * 只保留原始链表中 没有重复出现 的数字。
+     */
     public ListNode deleteDuplicates(ListNode head) {
-        if (head == null) return null;
-        Set<Integer> num = new HashSet<>();
-        ListNode temp = head;
-        while (temp != null && temp.next != null) {
-            if (temp.val == temp.next.val) {
-                num.add(temp.val);
-                temp.next = temp.next.next;
+        if (head == null) {
+            return head;
+        }
+
+        ListNode dummy = new ListNode(0, head);
+        ListNode cur = dummy;
+
+        while (cur.next != null && cur.next.next != null) {
+            if (cur.next.val == cur.next.next.val) {
+                int x = cur.next.val;
+                while (cur.next != null && cur.next.val == x) {
+                    cur.next = cur.next.next;
+                }
             } else {
-                temp = temp.next;
+                cur = cur.next;
             }
         }
-        ListNode headNull = new ListNode(-1);
-        headNull.next = head;
-        temp = headNull;
-        while (headNull.next != null) {
-            if (num.contains(headNull.next.val)){
-                headNull.next = headNull.next.next;
-            }else {
-                headNull = headNull.next;
-            }
-        }
-        return temp;
+        return dummy.next;
     }
 
 }
