@@ -11,12 +11,13 @@ public class Solution {
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> result = new LinkedList<>();
         result.add(new LinkedList<>());
-        for (int i = 0; i < nums.length; i++) {
+        for (int num : nums) {
+            // 当前的result的size
             int all = result.size();
             for (int j = 0; j < all; j++) {
                 // 每次取出原数组，再加一个元素
                 List<Integer> temp = new ArrayList<>(result.get(j));
-                temp.add(nums[i]);
+                temp.add(num);
                 result.add(temp);
             }
         }
