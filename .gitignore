@@ -15,3 +15,4 @@ target/
 .settings
 logs/
 /.idea/
+/src/com/glory/leetcode/leetcode/editor/cn/
