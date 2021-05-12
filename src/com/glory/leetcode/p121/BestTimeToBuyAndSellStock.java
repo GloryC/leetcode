@@ -42,6 +42,10 @@ package com.glory.leetcode.p121;
  */
 public class BestTimeToBuyAndSellStock {
 
+    /**
+     * dp[i][k][0] = max(dp[i-1][k][0], dp[i-1][k][1] + price)
+     * dp[i][k][1] = max(dp[i-1][k][1], dp[i-1][k-1][0] - price)
+     */
     static class Solution {
         public int maxProfit(int[] prices) {
             int dp_i_0 = 0, dp_i_1 = Integer.MIN_VALUE;
