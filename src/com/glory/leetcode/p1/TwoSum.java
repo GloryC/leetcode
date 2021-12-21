@@ -55,6 +55,9 @@ public class TwoSum {
         System.out.println(Arrays.toString(solution.twoSum(new int[]{2, 7, 11, 15}, 9)));
     }
 
+    /**
+     * 两数之和解法1
+     */
     static class Solution {
         public int[] twoSum(int[] nums, int target) {
             for (int i = 0; i < nums.length; i++) {
