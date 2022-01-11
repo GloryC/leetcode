@@ -56,9 +56,8 @@ package com.glory.leetcode.p94;
 
 import util.TreeNode;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
 
 /**
  * @author zhanggc
@@ -66,44 +65,62 @@ import java.util.Stack;
  */
 public class BinaryTreeInorderTraversal {
 
+    interface Solution {
+
+        /**
+         * 给定一个二叉树的根节点 root ，返回它的 中序 遍历。
+         *
+         * @param root 根节点
+         * @return 中序遍历
+         */
+        List<Integer> inorderTraversal(TreeNode root);
+    }
+
+
     /**
-     * 方法一：递归
+     * 方法1：回溯算法思路
      */
-    static class SolutionRecur {
+    static class Solution1 implements Solution {
+
+        private LinkedList<Integer> res = new LinkedList<>();
+
+        @Override
         public List<Integer> inorderTraversal(TreeNode root) {
-            List<Integer> res = new ArrayList<>();
-            inorder(root, res);
+            traverse(root);
             return res;
         }
 
-        private void inorder(TreeNode root, List<Integer> res) {
+        /**
+         * 二叉树遍历函数
+         */
+        private void traverse(TreeNode root) {
             if (root == null) {
                 return;
             }
-            inorder(root.left, res);
+            traverse(root.left);
+            // 中序遍历位置
             res.add(root.val);
-            inorder(root.right, res);
+            traverse(root.right);
         }
+
     }
 
     /**
-     * 方法二：迭代
+     * 方法二：动态规划思路
      */
-    static class SolutionIterate {
+    static class Solution2 implements Solution {
+
+        @Override
         public List<Integer> inorderTraversal(TreeNode root) {
-            List<Integer> list = new ArrayList<>();
-            Stack<TreeNode> stack = new Stack<>();
-            TreeNode cur = root;
-            while (cur != null || !stack.isEmpty()) {
-                while (cur != null) {
-                    stack.push(cur);
-                    cur = cur.left;
-                }
-                cur = stack.pop();
-                list.add(cur.val);
-                cur = cur.right;
+            LinkedList<Integer> res = new LinkedList<>();
+            if (root == null) {
+                return res;
             }
-            return list;
+
+            res.addAll(inorderTraversal(root.left));
+            res.add(root.val);
+            res.addAll(inorderTraversal(root.right));
+            return res;
         }
 
     }
