@@ -1,57 +1,48 @@
-//给你一个整数 n ，求恰由 n 个节点组成且节点值从 1 到 n 互不相同的 二叉搜索树 有多少种？返回满足题意的二叉搜索树的种数。 
-//
-// 
-//
-// 示例 1： 
-//
-// 
-//输入：n = 3
-//输出：5
-// 
-//
-// 示例 2： 
-//
-// 
-//输入：n = 1
-//输出：1
-// 
-//
-// 
-//
-// 提示： 
-//
-// 
-// 1 <= n <= 19 
-// 
-// Related Topics 树 动态规划 
-// 👍 1142 👎 0
-
 package com.glory.leetcode.p96;
 
 /**
  * @author zhanggc
- * @date 2021-05-08 14:43:31
+ * @date 2022-01-18 23:38:43
  */
 public class UniqueBinarySearchTrees {
-
-    static class Solution {
-        public int numTrees(int n) {
-            int[] dp = new int[n + 1];
-            dp[0] = 1;
-            dp[1] = 1;
-
-            for (int i = 2; i <= n; ++i) {
-                for (int j = 1; j <= i; ++j) {
-                    dp[i] += dp[j - 1] * dp[i - j];
-                }
-            }
-            return dp[n];
-        }
-    }
-
     public static void main(String[] args) {
         Solution solution = new Solution();
-        System.out.println(solution.numTrees(3));
+    }
+
+    static class Solution {
+        // 备忘录
+        int[][] memo;
+
+        public int numTrees(int n) {
+            memo = new int[n + 1][n + 1];
+            return count(1, n);
+        }
+
+        int count(int lo, int hi) {
+            // base case
+            if (lo > hi) {
+                return 1;
+            }
+
+            // 查备忘录
+            if (memo[lo][hi] != 0) {
+                return memo[lo][hi];
+            }
+
+
+            int res = 0;
+            for (int i = lo; i <= hi; i++) {
+                // i 的值作为根节点 root
+                int left = count(lo, i - 1);
+                int right = count(i + 1, hi);
+                // 左右子树的组合数乘积是 BST 的总数
+                res += left * right;
+            }
+
+            // 将结果存入备忘录
+            memo[lo][hi] = res;
+            return res;
+        }
     }
 
 }
